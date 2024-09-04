@@ -2,4 +2,4 @@
 
 > implemented in Taiwind CSS
 
-![screenshot_app](word_counter-matrix/screenshot)
+![screenshot_app](/screenshot)
