@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Speed Test</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+    <div class="w-full max-w-4xl bg-white rounded-lg shadow-md p-8">
+        <h1 class="text-2xl font-bold text-center mb-6">Typing Speed Test</h1>
+        <div id="text-container" class="text-lg font-mono text-gray-700 h-40 overflow-hidden">
+            <!-- Text will be dynamically inserted here -->
+        </div>
+        <hr class="mt-6 mb-6">
+        <div class="flex mt-6 mb-6">
+            <button id="start-test" class="bg-blue-500 text-white px-4 py-2 rounded mr-3 hover:bg-blue-600">Start Test</button>
+            <button id="stop-test" class="bg-blue-500 text-white px-4 py-2 rounded mr-3 hover:bg-blue-600">Stop Test</button>
+            <div id="timer" class="text-gray-600 text-lg font-bold mt-1.5"></div>
+        </div>
+        <div id="results" class="text-gray-600 mt-4"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
