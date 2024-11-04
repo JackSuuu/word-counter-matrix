@@ -3,23 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Typing Speed Test</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>WordCounter++</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Electrolize&family=Inter:wght@100..900&family=Monda:wght@400..700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <script src="https://unpkg.com/unlazy@0.11.3/dist/unlazy.with-hashing.iife.js" defer init></script>
+    <script type="text/javascript">
+        tailwind.config = {
+            theme: {
+                extend: {
+                keyframes: {
+                    typing: {
+                    "0%": {
+                        width: "0%",
+                        visibility: "hidden"
+                    },
+                    "100%": {
+                        width: "100%"
+                    }
+                    },
+                    blink: {
+                    "50%": {
+                        borderColor: "transparent"
+                    },
+                    "100%": {
+                        borderColor: "white"
+                    }
+                    }
+                },
+                animation: {
+                    typing: "typing 2s steps(20) alternate, blink .7s infinite"
+                }
+                },
+            },
+            plugins: [],
+            }
+    </script>
+    <style>
+        .electrolize-regular {
+            font-family: "Electrolize", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            }
+
+        .monda {
+            font-family: "Monda", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 400;
+            font-style: normal;
+        }
+    </style>
+    <link rel="stylesheet" href="index.css">
 </head>
-<body class="bg-gray-100 flex items-center justify-center h-screen">
-    <div class="w-full max-w-4xl bg-white rounded-lg shadow-md p-8">
-        <h1 class="text-2xl font-bold text-center mb-6">Typing Speed Test</h1>
-        <div id="text-container" class="text-lg font-mono text-gray-700 h-40 overflow-hidden">
-            <!-- Text will be dynamically inserted here -->
-        </div>
-        <hr class="mt-6 mb-6">
-        <div class="flex mt-6 mb-6">
-            <button id="start-test" class="bg-blue-500 text-white px-4 py-2 rounded mr-3 hover:bg-blue-600">Start Test</button>
-            <button id="stop-test" class="bg-blue-500 text-white px-4 py-2 rounded mr-3 hover:bg-blue-600">Stop Test</button>
-            <div id="timer" class="text-gray-600 text-lg font-bold mt-1.5"></div>
-        </div>
-        <div id="results" class="text-gray-600 mt-4"></div>
+<body class="min-w-[740px] p-20 bg-[#242424]">
+
+    <div class="bg-background text-foreground p-6">
+        <h1 class="overflow-hidden text-4xl font-bold text-[#13D800] mt-3 text-center electrolize-regular">Word Counter++</h1>
+        <p class="text-zinc-300 text-center font-bold mt-1 electrolize-regular">By Jack Su</p>
+        <hr class="border-solid border-1 border-green-500 mt-3">
+        <!-- <canvas class="absolute left-5" id="c"></canvas>
+        <script src="index.js"></script> -->
     </div>
-    <script src="script.js"></script>
+
+    <div class="max-w-[800px] bg-card border-solid border-2 border-green-300 p-6 rounded-lg shadow-lg mt-6 monda">
+    <h2 class="text-2xl font-bold text-green-500 underline underline-offset-2">Paste your text here</h2>
+    <p class="text-white mt-2">
+        Paste your text in the text area below and get the word count.
+    </p>
+    <div class="bg-background dark:bg-black p-6 rounded-lg shadow-xl">
+        <form action="/" method="post" class="hover:bg-accent ">
+            <textarea
+            placeholder="Paste your text here"
+            name="text"
+            id="text"
+            cols="30"
+            rows="10"
+            class="w-full bg-input bg-[#2C2C2A] text-zinc-300 border border-green-400/5 rounded-lg p-2 focus:outline-none focus:ring focus:ring-green-400 transition"
+            ></textarea>
+            <br />
+        </form>
+        </div>
+        <h3 id="stat" class="text-white">You've written 0 words and 0 characters. </h3>
+    </div>
+
+    <script>
+    // A class to handle the text input and count the words and characters
+    class WordCounter {
+        constructor(inputText) {
+            this.inputText = inputText;
+            this.inputText.addEventListener('input', () => {
+                this.count();
+            });
+        }
+        count() {
+            let wordStat = this.getWordStat(this.inputText.value.trim());
+            this.emitEvent(wordStat);
+        }
+
+        emitEvent(wordStat) {
+            // Create count event
+            let countEvent = new CustomEvent('count', {
+                bubbles: true,
+                cancelable: true,
+                detail: {
+                    wordStat
+                }
+            });
+            // dispatch the count event
+            this.inputText.dispatchEvent(countEvent);
+        }
+
+        getWordStat(str) {
+            let matches = str.match(/\S+/g);
+            return {
+                characters: str.length,
+                words: matches ? matches.length : 0,
+            };
+        }
+
+    }
+
+    // Add logic to the app
+    const inputText = document.querySelector('#text');
+    const statElem = document.querySelector('#stat');
+
+    new WordCounter(inputText);
+
+    const render = (event) => {
+    statElem.innerHTML = `<p>You've written <span class="text-green">${event.detail.wordStat.words} words</span> 
+        and <span class="text-green">${event.detail.wordStat.characters} characters</span>.</p>`;
+    }
+
+    inputText.addEventListener('count', render);
+
+    </script>
 </body>
 </html>
