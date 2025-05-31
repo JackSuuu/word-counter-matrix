@@ -70,25 +70,27 @@
         <script src="index.js"></script> -->
     </div>
 
-    <div class="max-w-[800px] bg-card border-solid border-2 border-green-300 p-6 rounded-lg shadow-lg mt-6 monda">
-    <h2 class="text-2xl font-bold text-green-500 underline underline-offset-2">Paste your text here</h2>
-    <p class="text-white mt-2">
-        Paste your text in the text area below and get the word count.
-    </p>
-    <div class="bg-background dark:bg-black p-6 rounded-lg shadow-xl">
-        <form action="/" method="post" class="hover:bg-accent ">
-            <textarea
-            placeholder="Paste your text here"
-            name="text"
-            id="text"
-            cols="30"
-            rows="10"
-            class="w-full bg-input bg-[#2C2C2A] text-zinc-300 border border-green-400/5 rounded-lg p-2 focus:outline-none focus:ring focus:ring-green-400 transition"
-            ></textarea>
-            <br />
-        </form>
+    <div class="flex justify-center items-center min-h-screen">
+        <div class="max-w-[800px] bg-card border-solid border-2 border-green-300 p-6 rounded-lg shadow-lg mt-6 monda">
+        <h2 class="text-2xl font-bold text-green-500 underline underline-offset-2">Paste your text here</h2>
+        <p class="text-white mt-2">
+            Paste your text in the text area below and get the word count.
+        </p>
+        <div class="bg-background dark:bg-black p-6 rounded-lg shadow-xl">
+            <form action="/" method="post" class="hover:bg-accent ">
+                <textarea
+                placeholder="Paste your text here"
+                name="text"
+                id="text"
+                cols="30"
+                rows="10"
+                class="w-full bg-input bg-[#2C2C2A] text-zinc-300 border border-green-400/5 rounded-lg p-2 focus:outline-none focus:ring focus:ring-green-400 transition"
+                ></textarea>
+                <br />
+            </form>
+            </div>
+            <h3 id="stat" class="text-white">You've written 0 words and 0 characters. </h3>
         </div>
-        <h3 id="stat" class="text-white">You've written 0 words and 0 characters. </h3>
     </div>
 
     <script>
