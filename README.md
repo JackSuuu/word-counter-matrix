@@ -2,4 +2,4 @@
 
 > implemented in Taiwind CSS
 
-![screenshot_app](/screenshot)
+![screenshot_app](/screenshot.png)
